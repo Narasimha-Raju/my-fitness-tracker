@@ -1,0 +1,20 @@
+window.DEFAULT_FOODS={
+"Banana":{type:"solid",unitOptions:["g","kg"],cal:89,protein:1.09,carbs:22.84,fat:.33,cost:.0058},
+"Egg":{type:"count",unitOptions:["egg"],cal:72,protein:6.3,carbs:.4,fat:4.8,cost:8},
+"Bread":{type:"solid",unitOptions:["g","kg"],cal:265,protein:9,carbs:49,fat:3.2,cost:.03},
+"Rice (cooked)":{type:"solid",unitOptions:["g","kg"],cal:130,protein:2.7,carbs:28,fat:.3,cost:0},
+"Soya chunks (dry)":{type:"solid",unitOptions:["g","kg"],cal:345,protein:52,carbs:33,fat:.5,cost:.14},
+"Chicken":{type:"solid",unitOptions:["g","kg"],cal:165,protein:22,carbs:0,fat:7,cost:.26},
+"Fish":{type:"solid",unitOptions:["g","kg"],cal:110,protein:21,carbs:0,fat:2.5,cost:0},
+"Curd":{type:"solid",unitOptions:["g","kg"],cal:60,protein:3.5,carbs:4.5,fat:3,cost:.08},
+"Carrot":{type:"solid",unitOptions:["g","kg"],cal:41,protein:.9,carbs:9.6,fat:.24,cost:.10},
+"Potato":{type:"solid",unitOptions:["g","kg"],cal:77,protein:2,carbs:17,fat:.1,cost:.06},
+"Roti / Wheat":{type:"solid",unitOptions:["g","kg"],cal:340,protein:13,carbs:72,fat:2.5,cost:.07},
+"Tomato":{type:"solid",unitOptions:["g","kg"],cal:18,protein:.9,carbs:3.9,fat:.2,cost:0},
+"Onion":{type:"solid",unitOptions:["g","kg"],cal:40,protein:1.1,carbs:9.3,fat:.1,cost:0},
+"Chilli":{type:"solid",unitOptions:["g","kg"],cal:40,protein:1.9,carbs:8.8,fat:.4,cost:0},
+"Home vegetables / curry":{type:"solid",unitOptions:["g","kg"],cal:80,protein:2,carbs:10,fat:3,cost:0},
+"Dal / lentils (cooked)":{type:"solid",unitOptions:["g","kg"],cal:116,protein:9,carbs:20,fat:.4,cost:0},
+"Milk":{type:"liquid",unitOptions:["ml","L"],cal:60,protein:3.2,carbs:4.8,fat:3.2,cost:.07},
+"Coffee":{type:"liquid",unitOptions:["ml","L"],cal:25,protein:1,carbs:2.5,fat:1,cost:.007}
+};
