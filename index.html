@@ -26,7 +26,7 @@ button{cursor:pointer}
 a{color:inherit}
 .app{max-width:1360px;margin:auto;padding:16px 18px 55px}
 .nav{
-  position:sticky;top:10px;z-index:50;display:flex;align-items:center;gap:14px;
+  position:-webkit-sticky;position:sticky;top:0;z-index:10000;display:flex;align-items:center;gap:14px;
   background:rgba(255,255,255,.92);backdrop-filter:blur(16px);
   border:1px solid rgba(255,255,255,.8);border-radius:15px;padding:9px 11px;
   box-shadow:0 8px 26px rgba(15,23,42,.08)
@@ -162,6 +162,190 @@ canvas{width:100%;height:100%;display:block}
   .history-row{grid-template-columns:60px 1fr}.history-value{grid-column:2;text-align:left}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* ===== Common fixed navigation + shared tracking date ===== */
+.site-nav,.nav{
+  position:sticky !important;
+  top:0 !important;
+  z-index:9000 !important;
+  min-height:58px;
+  margin:-1px 0 14px;
+  padding:8px 10px !important;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:rgba(255,255,255,.94) !important;
+  border:1px solid rgba(219,226,236,.92) !important;
+  border-radius:0 0 16px 16px !important;
+  box-shadow:0 8px 22px rgba(15,23,42,.08) !important;
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+}
+.site-nav .site-brand,.nav .brand{flex:0 0 auto}
+.site-links,.links{display:flex;align-items:center;gap:4px;margin-left:auto}
+.site-links a,.links a{white-space:nowrap}
+.shared-date-control{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex:0 0 auto;
+  margin-left:4px;
+  padding-left:8px;
+  border-left:1px solid #e7ecf2;
+}
+.shared-date-label{
+  font-size:9px;
+  line-height:1;
+  color:#7b8797;
+  font-weight:900;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.shared-date-input{
+  width:auto !important;
+  min-width:136px;
+  max-width:160px;
+  min-height:36px;
+  border:1px solid #dfe5ee !important;
+  border-radius:10px !important;
+  padding:8px 9px !important;
+  background:#fff !important;
+  color:#172033 !important;
+  font-size:11px !important;
+  font-weight:850 !important;
+  outline:none;
+}
+.shared-date-input:focus{border-color:#8ab4ff !important;box-shadow:0 0 0 3px rgba(37,99,235,.08) !important}
+.shared-today-btn{
+  border:1px solid #dbe4ef;
+  background:#f8fafc;
+  color:#334155;
+  border-radius:9px;
+  min-height:36px;
+  padding:0 10px;
+  font-size:10px;
+  font-weight:900;
+  cursor:pointer;
+  transition:.18s ease;
+  white-space:nowrap;
+}
+.shared-today-btn:hover{transform:translateY(-1px);background:#eef4ff;color:#1d4ed8}
+.shared-date-hidden{display:none !important}
+@media(max-width:900px){
+  .shared-date-label{display:none}
+  .shared-date-control{padding-left:6px}
+  .shared-date-input{min-width:128px;max-width:145px}
+}
+@media(max-width:720px){
+  .site-nav,.nav{
+    margin:0 -1px 12px;
+    border-radius:0 0 14px 14px !important;
+    padding:7px 8px !important;
+    gap:7px;
+    min-height:54px;
+    flex-wrap:wrap;
+  }
+  .site-links,.links{
+    order:3;
+    width:100%;
+    margin-left:0 !important;
+    overflow-x:auto;
+    scrollbar-width:none;
+    padding-top:2px;
+  }
+  .site-links::-webkit-scrollbar,.links::-webkit-scrollbar{display:none}
+  .site-links a,.links a{flex:1 0 auto;text-align:center;min-width:82px;padding:8px 9px !important}
+  .shared-date-control{margin-left:auto;padding-left:0;border-left:0}
+  .shared-date-input{min-width:124px;width:124px !important}
+}
+@media(max-width:430px){
+  .shared-today-btn{display:none}
+  .shared-date-input{min-width:118px;width:118px !important}
+}
+
+/* Shared sticky top navigation: remains accessible while scrolling. */
+.nav {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 10000 !important;
+}
+
+</style>
+
+<style id="mobile-layout-fixes">
+/* Mobile layout fixes: preserve existing UI and functionality, prevent clipping/overflow. */
+html, body { width:100%; max-width:100%; overflow-x:hidden; }
+*, *::before, *::after { max-width:100%; }
+img, canvas, svg, video { max-width:100%; }
+button, input, select, textarea { max-width:100%; min-width:0; }
+
+@media (max-width: 720px){
+  body { min-width:0; }
+  .app { width:100%; max-width:100%; padding-left:10px !important; padding-right:10px !important; overflow-x:clip; }
+  .hero, .card, .section, .site-nav, .nav { max-width:100%; }
+
+  /* Header/navigation */
+  .site-nav, .nav { flex-wrap:wrap !important; gap:8px !important; }
+  .site-nav .site-brand, .brand { min-width:0; max-width:100%; }
+  .site-nav .site-brand span:last-child, .brand { overflow:hidden; text-overflow:ellipsis; }
+  .site-nav .site-links, .links { width:100% !important; min-width:0; overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+  .site-nav .site-links::-webkit-scrollbar, .links::-webkit-scrollbar { display:none; }
+  .site-nav .site-links a, .links a { flex:1 0 auto; min-width:74px !important; }
+  .date-wrap, .date-control, .date-box { width:100% !important; min-width:0; }
+  .date-wrap input, .date-control input, .date-box input { width:100% !important; min-width:0; }
+
+  /* Main grids/cards */
+  .top-grid, .layout, .today-grid, .history-grid, .chart-grid, .analytics-grid, .month-grid, .year-grid,
+  .journey-overview, .progress-dashboard { grid-template-columns:minmax(0,1fr) !important; }
+  .grid-2, .form-two, .cardio-grid { grid-template-columns:minmax(0,1fr) !important; }
+  .hero-top, .hero-actions, .section-head, .section-heading, .panel-head, .week-progress-top,
+  .period-head, .period-nav { min-width:0; }
+  .hero p, .section-sub, .subtitle, .period-sub { overflow-wrap:anywhere; }
+
+  /* Prevent wide controls from forcing the viewport */
+  .row, .exercise-row, .recipe-ingredient { min-width:0 !important; width:100%; }
+  .row > *, .exercise-row > *, .recipe-ingredient > * { min-width:0 !important; max-width:100%; }
+  .meal .row { width:100%; }
+  .meal .row input, .meal .row select { min-width:0 !important; }
+
+  /* Buttons/actions */
+  .actions, .footer-controls, .action-bar, .action-group, .cardio-actions, .period-actions { min-width:0; max-width:100%; }
+  .actions button, .footer-controls button, .action-group button, .action-bar button { max-width:100%; }
+
+  /* Tables/charts stay inside their cards */
+  .table-wrap, .history-table, .table, .lib-list, .week-strip { max-width:100%; }
+  .table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .chart-wrap, .chart { width:100% !important; max-width:100%; overflow:hidden; }
+  canvas { max-width:100% !important; }
+
+  /* Modals/drawers */
+  .custom-modal, .food-library-modal { padding:8px !important; }
+  .custom-modal-card, .food-library-card { width:min(100%,680px) !important; max-width:100% !important; margin:0; }
+  .lib-head-row, .lib-tools { min-width:0; max-width:100%; }
+
+  /* Week cards can scroll internally instead of clipping the page */
+  .week-days, .week-strip { max-width:100%; }
+}
+
+@media (max-width: 480px){
+  .app { padding-left:8px !important; padding-right:8px !important; }
+  .hero { border-radius:18px !important; }
+  .hero h1 { font-size:28px !important; }
+  .hero-inner { padding-left:16px !important; padding-right:16px !important; }
+  .hero-actions .btn, .hero-actions a, .hero-actions button { width:100%; }
+  .hero-stats, .hero-strip, .mini-stats, .metrics, .kpis, .chart-kpis, .week-footer { grid-template-columns:minmax(0,1fr) !important; }
+  .goal-row { grid-template-columns:70px minmax(0,1fr) !important; }
+  .goal-status { grid-column:2; text-align:left !important; }
+  .section-title, .week-progress-title, .period-title { overflow-wrap:anywhere; }
+  .section-heading .heading-copy { min-width:0; }
+  .section-action { width:100%; }
+  .section-action button, .section-action .btn { width:100%; }
+  .period-actions { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+  .period-actions button { min-width:0; padding-left:6px; padding-right:6px; }
+  .library-card, .plan-card { width:100%; }
+}
 </style>
 </head>
 <body>
@@ -597,6 +781,62 @@ homeDate.addEventListener("change", render);
 window.addEventListener("storage",e=>{if(e.key?.startsWith(DIET_PREFIX)||e.key?.startsWith(WORKOUT_PREFIX)||e.key==="fatloss-custom-foods")render()});
 window.addEventListener("resize",()=>{clearTimeout(window.__homeResize);window.__homeResize=setTimeout(()=>render(),180)});
 render();
+</script>
+
+<script>
+/* Shared top navigation/date controller. The existing page date input is moved
+   into the common sticky navigation so the underlying page logic keeps using
+   the same #date element and existing change handlers. */
+(function(){
+  function todayISO(){
+    const d=new Date();
+    return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);
+  }
+  function initSharedHeader(){
+    const nav=document.querySelector('.site-nav')||document.querySelector('.nav');
+    const date=document.getElementById('date');
+    if(!nav||!date)return;
+
+    let control=nav.querySelector('.shared-date-control');
+    if(!control){
+      control=document.createElement('div');
+      control.className='shared-date-control';
+      control.innerHTML=`<span class="shared-date-label">Tracking date</span><button type="button" class="shared-today-btn" id="sharedTodayBtn">Today</button>`;
+      nav.appendChild(control);
+    }
+
+    date.classList.add('shared-date-input');
+    date.removeAttribute('style');
+    control.appendChild(date);
+
+    const oldDateWrap=document.querySelector('.date-wrap,.date-box,.date-control:not(.shared-date-control)');
+    if(oldDateWrap && !oldDateWrap.closest('.shared-date-control')) oldDateWrap.classList.add('shared-date-hidden');
+
+    const todayBtn=control.querySelector('#sharedTodayBtn');
+    if(todayBtn && !todayBtn.dataset.bound){
+      todayBtn.dataset.bound='1';
+      todayBtn.addEventListener('click',()=>{
+        const today=todayISO();
+        if(date.value!==today){
+          date.value=today;
+          date.dispatchEvent(new Event('change',{bubbles:true}));
+        }else{
+          date.dispatchEvent(new Event('change',{bubbles:true}));
+        }
+      });
+    }
+
+    // Home is intentionally anchored to today's date whenever it opens.
+    const file=location.pathname.split('/').pop()||'index.html';
+    if(file==='index.html' || file===''){
+      const today=todayISO();
+      if(date.value!==today) date.value=today;
+    }
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initSharedHeader);
+  else initSharedHeader();
+})();
 </script>
 <script src="cross-device-sync.js"></script>
 </body>

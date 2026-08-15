@@ -46,7 +46,24 @@ select:focus,input:focus,textarea:focus{border-color:#8ab4ff;box-shadow:0 0 0 3p
 .checks{display:grid;gap:9px;margin-top:14px}.check{display:flex;gap:8px;align-items:center;font-size:13px}.check input{width:auto}
 .motivation{background:linear-gradient(135deg,#ecfdf5,#eff6ff)}
 .quote{font-weight:800;line-height:1.45}.tiny{font-size:11px;color:var(--muted);margin-top:7px}
-.refs{display:grid;gap:10px;margin-top:12px}.refs img{width:100%;display:block;border-radius:12px;border:1px solid var(--line)}
+.refs{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+  margin-top:12px;
+  align-items:stretch;
+}
+.refs img{
+  width:100%;
+  height:100%;
+  aspect-ratio:4 / 5;
+  object-fit:cover;
+  display:block;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:#f8fafc;
+  box-shadow:0 4px 14px rgba(15,23,42,.04);
+}
 .tabs{display:flex;gap:7px;background:#eef2f7;border-radius:13px;padding:6px;width:max-content;max-width:100%;overflow:auto}
 .tab{border:0;background:transparent;color:#64748b;padding:10px 15px;border-radius:9px;font-weight:800;white-space:nowrap}.tab.active{background:#fff;color:var(--primary);box-shadow:0 3px 12px rgba(15,23,42,.07)}
 .analytics{margin-top:18px}.period{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px}.period-title{font-size:21px;font-weight:850}.period-sub{font-size:12px;color:var(--muted);margin-top:3px}.period-actions{display:flex;gap:7px}
@@ -56,6 +73,36 @@ select:focus,input:focus,textarea:focus{border-color:#8ab4ff;box-shadow:0 0 0 3p
 .table-wrap{overflow:auto;margin-top:14px}.table{width:100%;border-collapse:collapse;font-size:12px}.table th,.table td{padding:9px 7px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}.table th{color:var(--muted)}
 .good{color:var(--green);font-weight:750}.bad{color:var(--red);font-weight:750}.warn{color:var(--amber);font-weight:750}
 @media(max-width:1050px){.layout,.chart-grid{grid-template-columns:1fr}.hero-strip{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){
+  .routine-reference-grid{
+    display:flex;
+    gap:12px;
+    overflow-x:auto;
+    padding:2px 2px 8px;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+  }
+  .routine-reference-card{
+    flex:0 0 min(82vw,390px);
+    scroll-snap-align:center;
+  }
+
+  .refs{
+    display:flex;
+    gap:12px;
+    overflow-x:auto;
+    padding:2px 2px 8px;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+  }
+  .refs img{
+    flex:0 0 min(78vw,300px);
+    width:min(78vw,300px);
+    height:auto;
+    aspect-ratio:4 / 5;
+    scroll-snap-align:start;
+  }
+}
 @media(max-width:720px){.hero-top{flex-direction:column}.date-box{width:100%}.form-two{grid-template-columns:1fr}.exercise-row{grid-template-columns:1fr 1fr 1fr}.exercise-row .exercise-name{grid-column:1/-1}.exercise-row .remove{grid-column:1/-1}.metric-grid,.kpis{grid-template-columns:1fr 1fr}}
 
 /* ===== Lower-section UI refresh ===== */
@@ -96,6 +143,46 @@ select:focus,input:focus,textarea:focus{border-color:#8ab4ff;box-shadow:0 0 0 3p
 .analytics .table{margin:0}
 .analytics .table th{background:#f8fafc;font-size:10px;text-transform:uppercase;letter-spacing:.06em}
 .analytics .table tr:last-child td{border-bottom:0}
+
+
+/* ===== Centered Workout Routine References ===== */
+.routine-reference-section{
+  margin-top:18px;
+  overflow:hidden;
+  background:linear-gradient(145deg,#ffffff 0%,#fbfcff 58%,#f8f5ff 100%);
+}
+.routine-reference-topline{
+  padding-bottom:2px;
+}
+.routine-reference-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+  align-items:start;
+  justify-items:center;
+}
+.routine-reference-card{
+  width:100%;
+  max-width:430px;
+  margin:0;
+  text-align:center;
+}
+.routine-reference-card img{
+  display:block;
+  width:100%;
+  max-width:430px;
+  height:auto;
+  border-radius:16px;
+  border:1px solid #e5eaf1;
+  background:#f7f9fc;
+  box-shadow:0 12px 28px rgba(15,23,42,.08);
+}
+.routine-reference-card figcaption{
+  margin-top:8px;
+  font-size:11px;
+  font-weight:850;
+  color:#475569;
+}
 
 /* ===== Premium lower dashboard sections ===== */
 .week-progress-card{position:relative;overflow:hidden;padding:0;background:linear-gradient(145deg,#ffffff 0%,#f8fbff 55%,#f8f5ff 100%)}
@@ -174,6 +261,132 @@ select:focus,input:focus,textarea:focus{border-color:#8ab4ff;box-shadow:0 0 0 3p
   .site-nav{flex-wrap:wrap}
   .site-nav .site-links{order:3;width:100%;margin-left:0}
   .site-nav .site-links a{flex:1;text-align:center;min-width:82px}
+}
+
+
+/* ===== Common fixed navigation + shared tracking date ===== */
+.site-nav,.nav{
+  position:-webkit-sticky !important;
+  position:sticky !important;
+  top:0 !important;
+  z-index:10000 !important;
+  min-height:58px;
+  margin:-1px 0 14px;
+  padding:8px 10px !important;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:rgba(255,255,255,.94) !important;
+  border:1px solid rgba(219,226,236,.92) !important;
+  border-radius:0 0 16px 16px !important;
+  box-shadow:0 8px 22px rgba(15,23,42,.08) !important;
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+}
+.site-nav .site-brand,.nav .brand{flex:0 0 auto}
+.site-links,.links{display:flex;align-items:center;gap:4px;margin-left:auto}
+.site-links a,.links a{white-space:nowrap}
+.shared-date-control{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex:0 0 auto;
+  margin-left:4px;
+  padding-left:8px;
+  border-left:1px solid #e7ecf2;
+}
+.shared-date-label{
+  font-size:9px;
+  line-height:1;
+  color:#7b8797;
+  font-weight:900;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.shared-date-input{
+  width:auto !important;
+  min-width:136px;
+  max-width:160px;
+  min-height:36px;
+  border:1px solid #dfe5ee !important;
+  border-radius:10px !important;
+  padding:8px 9px !important;
+  background:#fff !important;
+  color:#172033 !important;
+  font-size:11px !important;
+  font-weight:850 !important;
+  outline:none;
+}
+.shared-date-input:focus{border-color:#8ab4ff !important;box-shadow:0 0 0 3px rgba(37,99,235,.08) !important}
+.shared-today-btn{
+  border:1px solid #dbe4ef;
+  background:#f8fafc;
+  color:#334155;
+  border-radius:9px;
+  min-height:36px;
+  padding:0 10px;
+  font-size:10px;
+  font-weight:900;
+  cursor:pointer;
+  transition:.18s ease;
+  white-space:nowrap;
+}
+.shared-today-btn:hover{transform:translateY(-1px);background:#eef4ff;color:#1d4ed8}
+.shared-date-hidden{display:none !important}
+@media(max-width:900px){
+  .shared-date-label{display:none}
+  .shared-date-control{padding-left:6px}
+  .shared-date-input{min-width:128px;max-width:145px}
+}
+@media(max-width:720px){
+  .site-nav,.nav{
+    margin:0 -1px 12px;
+    border-radius:0 0 14px 14px !important;
+    padding:7px 8px !important;
+    gap:7px;
+    min-height:54px;
+    flex-wrap:wrap;
+  }
+  .site-links,.links{
+    order:3;
+    width:100%;
+    margin-left:0 !important;
+    overflow-x:auto;
+    scrollbar-width:none;
+    padding-top:2px;
+  }
+  .site-links::-webkit-scrollbar,.links::-webkit-scrollbar{display:none}
+  .site-links a,.links a{flex:1 0 auto;text-align:center;min-width:82px;padding:8px 9px !important}
+  .shared-date-control{margin-left:auto;padding-left:0;border-left:0}
+  .shared-date-input{min-width:124px;width:124px !important}
+}
+@media(max-width:430px){
+  .shared-today-btn{display:none}
+  .shared-date-input{min-width:118px;width:118px !important}
+}
+
+.custom-exercise-modal{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(8,18,35,.58);backdrop-filter:blur(6px)}
+.custom-exercise-modal.open{display:flex}
+.custom-exercise-card{width:min(720px,100%);max-height:min(88vh,760px);overflow:auto;background:#fff;border-radius:18px;padding:20px;box-shadow:0 30px 90px rgba(0,0,0,.28)}
+.custom-exercise-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px}
+.custom-exercise-close{padding:8px 10px;min-width:40px}
+.custom-exercise-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.custom-exercise-grid label{font-size:10px;font-weight:850;color:#64748b;letter-spacing:.04em;text-transform:uppercase}
+.custom-exercise-grid input,.custom-exercise-grid select{margin-top:6px}
+.custom-rep-pair{display:grid;grid-template-columns:1fr auto 1fr;gap:6px;align-items:center;margin-top:6px}
+.custom-rep-pair input{margin-top:0}
+.custom-rep-pair span{color:#94a3b8;font-weight:900}
+.custom-exercise-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.custom-exercise-status{margin-top:9px;font-size:11px;color:#64748b;min-height:16px}
+@media(max-width:720px){.custom-exercise-grid{grid-template-columns:1fr}.custom-exercise-card{padding:16px;border-radius:16px}.custom-exercise-actions button{flex:1;min-width:120px}}
+
+/* Shared sticky top navigation: remains accessible while scrolling. */
+.nav {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 10000 !important;
 }
 
 </style>
@@ -393,15 +606,6 @@ button, input, select, textarea { max-width:100%; min-width:0; }
     <div class="tiny">One completed workout is one more vote for the person you're becoming.</div>
   </section>
 
-  <section class="card side-card">
-    <div class="title">Your Workout Routine</div>
-    <div class="subtitle">Reference images from your routine.</div>
-    <div class="refs">
-      <img src="references/day1_push.png" alt="Push routine">
-      <img src="references/day2_pull.png" alt="Pull routine">
-      <img src="references/day3_legs.png" alt="Legs and rest routine">
-    </div>
-  </section>
 </aside>
 </div>
 
@@ -436,9 +640,32 @@ button, input, select, textarea { max-width:100%; min-width:0; }
       <div class="title">My Exercises</div>
       <div class="subtitle">Your reusable exercise library, grouped by training focus so your workouts stay easy to customize.</div>
     </div>
-    <button class="section-action" type="button" onclick="document.getElementById('routine').focus();document.getElementById('routine').scrollIntoView({behavior:'smooth',block:'center'})">+ Add Exercise</button>
+    <button class="section-action" type="button" onclick="openCustomExerciseModal()">+ Add Exercise</button>
   </div>
   <div class="exercise-library-grid" id="exerciseLibraryGrid"></div>
+</section>
+
+<section class="card dashboard-section routine-reference-section" id="routineReferenceSection">
+  <div class="section-topline routine-reference-topline">
+    <div>
+      <div class="title">Your Workout Routine</div>
+      <div class="subtitle">Reference images from your routine.</div>
+    </div>
+  </div>
+  <div class="routine-reference-grid">
+    <figure class="routine-reference-card">
+      <img src="references/day1_push.png" alt="Push routine reference">
+      <figcaption>Push • Chest, Shoulders & Triceps</figcaption>
+    </figure>
+    <figure class="routine-reference-card">
+      <img src="references/day2_pull.png" alt="Pull routine reference">
+      <figcaption>Pull • Back, Biceps & Rear Delts</figcaption>
+    </figure>
+    <figure class="routine-reference-card">
+      <img src="references/day3_legs.png" alt="Legs and rest routine reference">
+      <figcaption>Legs • Legs & Active Recovery</figcaption>
+    </figure>
+  </div>
 </section>
 
 <section class="card dashboard-section" id="workoutPlansSection">
@@ -859,7 +1086,211 @@ updateNotesCount();
 populateRoutineSelect();
 dateEl.value=todayISO();
 load();
+
+/* Custom exercise library */
+const CUSTOM_EXERCISES_KEY="workout-custom-exercises-v1";
+function readCustomExercises(){
+  try{return JSON.parse(localStorage.getItem(CUSTOM_EXERCISES_KEY)||"[]")}catch(e){return[]}
+}
+function writeCustomExercises(list){
+  localStorage.setItem(CUSTOM_EXERCISES_KEY,JSON.stringify(list));
+}
+function openCustomExerciseModal(){
+  const modal=document.getElementById("customExerciseModal");
+  if(!modal)return;
+  document.getElementById("customExerciseName").value="";
+  document.getElementById("customExerciseNotes").value="";
+  document.getElementById("customExerciseStatus").textContent="";
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden","false");
+  setTimeout(()=>document.getElementById("customExerciseName")?.focus(),40);
+}
+function closeCustomExerciseModal(){
+  const modal=document.getElementById("customExerciseModal");
+  if(!modal)return;
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden","true");
+}
+function customExerciseOptionsForRoutine(){
+  const current=document.getElementById("routine")?.value||"";
+  const custom=readCustomExercises();
+  const routineType=current.includes("Push")?"Push":current.includes("Pull")?"Pull":current.includes("Legs")?"Legs":"Recovery";
+  return custom.filter(x=>x.type===routineType||x.type==="Custom");
+}
+function addCustomExercisesToLibraryGrid(){
+  const grid=document.getElementById("exerciseLibraryGrid");
+  if(!grid)return;
+  const custom=readCustomExercises();
+  const existing=grid.innerHTML;
+  const customHtml=custom.map(x=>`<div class="library-card"><div class="library-top"><div class="library-icon">🏋️</div><div class="library-name">${esc(x.name)}</div><div class="library-tag">${esc(x.type)}</div></div><div class="library-meta"><span>${esc(x.bodyPart)} • ${esc(x.equipment)}</span><span>${x.sets} × ${x.repMin}–${x.repMax}</span></div><div style="margin-top:8px;font-size:10px;color:#64748b">Saved custom exercise</div></div>`).join("");
+  grid.innerHTML=existing+(customHtml?customHtml:"");
+}
+function saveCustomExercise(){
+  const name=document.getElementById("customExerciseName").value.trim();
+  const bodyPart=document.getElementById("customExerciseBodyPart").value;
+  const type=document.getElementById("customExerciseType").value;
+  const equipment=document.getElementById("customExerciseEquipment").value;
+  const sets=Number(document.getElementById("customExerciseSets").value)||0;
+  const repMin=Number(document.getElementById("customExerciseRepMin").value)||0;
+  const repMax=Number(document.getElementById("customExerciseRepMax").value)||repMin;
+  const rest=Number(document.getElementById("customExerciseRest").value)||0;
+  const notes=document.getElementById("customExerciseNotes").value.trim();
+  const status=document.getElementById("customExerciseStatus");
+  if(!name){status.textContent="Enter an exercise name.";return}
+  if(repMax<repMin){status.textContent="Maximum reps must be greater than or equal to minimum reps.";return}
+  const list=readCustomExercises();
+  if(list.some(x=>x.name.toLowerCase()===name.toLowerCase())){status.textContent="An exercise with this name already exists.";return}
+  const item={id:"custom-"+Date.now().toString(36),name,bodyPart,type,equipment,sets,repMin,repMax,rest,notes,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};
+  list.push(item);
+  writeCustomExercises(list);
+
+  /* Add the newly created exercise to today's workout immediately. */
+  const shouldAddNow=(type==="Custom"||(state.routine||"").includes(type)||((state.routine||"").includes("Push")&&type==="Push")||((state.routine||"").includes("Pull")&&type==="Pull")||((state.routine||"").includes("Legs")&&type==="Legs"));
+  if(shouldAddNow){
+    state.exercises.push({name,sets,reps:repMin,weight:0,done:false,customExerciseId:item.id});
+    renderExercises();
+    calculate();
+    persist();
+  }
+  addCustomExercisesToLibraryGrid();
+  status.textContent=shouldAddNow?"✓ Exercise saved and added to today's workout.":"✓ Exercise saved. It is now available for matching workout types.";
+  setTimeout(closeCustomExerciseModal,650);
+}
+/* Extend the existing exercise dropdown without changing the original workout data model. */
+const originalExerciseOptions=exerciseOptions;
+exerciseOptions=function(selected=""){
+  const base=originalExerciseOptions(selected);
+  const custom=customExerciseOptionsForRoutine();
+  if(!custom.length)return base;
+  let extra='<optgroup label="Custom Exercises">';
+  custom.forEach(x=>{extra+=`<option value="${esc(x.name)}"${selected===x.name?" selected":""}>${esc(x.name)}</option>`});
+  extra+='</optgroup>';
+  return base+extra;
+};
+const originalRenderExercises=renderExercises;
+renderExercises=function(){originalRenderExercises();};
+document.getElementById("customExerciseModal")?.addEventListener("click",e=>{if(e.target.id==="customExerciseModal")closeCustomExerciseModal()});
+addCustomExercisesToLibraryGrid();
 </script>
+
+<script>
+/* Shared top navigation/date controller. The existing page date input is moved
+   into the common sticky navigation so the underlying page logic keeps using
+   the same #date element and existing change handlers. */
+(function(){
+  function todayISO(){
+    const d=new Date();
+    return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);
+  }
+  function initSharedHeader(){
+    const nav=document.querySelector('.site-nav')||document.querySelector('.nav');
+    const date=document.getElementById('date');
+    if(!nav||!date)return;
+
+    let control=nav.querySelector('.shared-date-control');
+    if(!control){
+      control=document.createElement('div');
+      control.className='shared-date-control';
+      control.innerHTML=`<span class="shared-date-label">Tracking date</span><button type="button" class="shared-today-btn" id="sharedTodayBtn">Today</button>`;
+      nav.appendChild(control);
+    }
+
+    date.classList.add('shared-date-input');
+    date.removeAttribute('style');
+    control.appendChild(date);
+
+    const oldDateWrap=document.querySelector('.date-wrap,.date-box,.date-control:not(.shared-date-control)');
+    if(oldDateWrap && !oldDateWrap.closest('.shared-date-control')) oldDateWrap.classList.add('shared-date-hidden');
+
+    const todayBtn=control.querySelector('#sharedTodayBtn');
+    if(todayBtn && !todayBtn.dataset.bound){
+      todayBtn.dataset.bound='1';
+      todayBtn.addEventListener('click',()=>{
+        const today=todayISO();
+        if(date.value!==today){
+          date.value=today;
+          date.dispatchEvent(new Event('change',{bubbles:true}));
+        }else{
+          date.dispatchEvent(new Event('change',{bubbles:true}));
+        }
+      });
+    }
+
+    // Home is intentionally anchored to today's date whenever it opens.
+    const file=location.pathname.split('/').pop()||'index.html';
+    if(file==='index.html' || file===''){
+      const today=todayISO();
+      if(date.value!==today) date.value=today;
+    }
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initSharedHeader);
+  else initSharedHeader();
+})();
+</script>
+
+<div id="customExerciseModal" class="custom-exercise-modal" aria-hidden="true">
+  <div class="custom-exercise-card" role="dialog" aria-modal="true" aria-labelledby="customExerciseTitle">
+    <div class="custom-exercise-head">
+      <div>
+        <div id="customExerciseTitle" class="title">Create Custom Exercise</div>
+        <div class="subtitle">Save this exercise once and reuse it in your workouts.</div>
+      </div>
+      <button type="button" class="secondary custom-exercise-close" onclick="closeCustomExerciseModal()">✕</button>
+    </div>
+
+    <div class="custom-exercise-grid">
+      <label>Exercise Name
+        <input id="customExerciseName" type="text" placeholder="e.g. Cable Chest Fly">
+      </label>
+      <label>Primary Body Part
+        <select id="customExerciseBodyPart">
+          <option>Chest</option><option>Shoulders</option><option>Triceps</option>
+          <option>Back</option><option>Biceps</option><option>Rear Delts</option>
+          <option>Quads</option><option>Hamstrings</option><option>Glutes</option>
+          <option>Calves</option><option>Core</option><option>Abs</option>
+          <option>Lower Back</option><option>Forearms</option>
+        </select>
+      </label>
+      <label>Workout Type
+        <select id="customExerciseType">
+          <option>Push</option><option>Pull</option><option>Legs</option>
+          <option>Cardio</option><option>Core</option><option>Mobility</option><option>Recovery</option><option>Custom</option>
+        </select>
+      </label>
+      <label>Equipment
+        <select id="customExerciseEquipment">
+          <option>Barbell</option><option>Dumbbell</option><option>Cable</option>
+          <option>Machine</option><option>Bodyweight</option><option>Kettlebell</option>
+          <option>Resistance Band</option><option>Smith Machine</option><option>Treadmill</option>
+          <option>Cycle</option><option>Other</option>
+        </select>
+      </label>
+      <label>Default Sets
+        <input id="customExerciseSets" type="number" min="0" step="1" value="3">
+      </label>
+      <label>Rep Range
+        <div class="custom-rep-pair">
+          <input id="customExerciseRepMin" type="number" min="0" step="1" value="10" placeholder="Min">
+          <span>–</span>
+          <input id="customExerciseRepMax" type="number" min="0" step="1" value="12" placeholder="Max">
+        </div>
+      </label>
+      <label>Rest (seconds)
+        <input id="customExerciseRest" type="number" min="0" step="5" value="90">
+      </label>
+      <label>Notes
+        <input id="customExerciseNotes" type="text" placeholder="Optional instructions or notes">
+      </label>
+    </div>
+
+    <div class="custom-exercise-actions">
+      <button type="button" class="secondary" onclick="closeCustomExerciseModal()">Cancel</button>
+      <button type="button" class="primary" onclick="saveCustomExercise()">Save Exercise</button>
+    </div>
+    <div id="customExerciseStatus" class="custom-exercise-status"></div>
+  </div>
+</div>
 <script src="cross-device-sync.js"></script>
 </body>
 </html>
