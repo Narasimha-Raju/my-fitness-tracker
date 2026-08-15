@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Fat Loss Journey</title>
+<style>
+:root{
+  --bg:#f4f7fb;--surface:#fff;--surface2:#f8fafc;--text:#182235;--muted:#6b7280;
+  --line:#e6eaf0;--primary:#2563eb;--primary2:#7c3aed;--green:#16a34a;--amber:#f59e0b;
+  --red:#dc2626;--shadow:0 10px 30px rgba(15,23,42,.07);--radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:linear-gradient(180deg,#eef4ff 0,#f7f9fc 260px,#f4f7fb 100%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{max-width:1280px;margin:auto;padding:28px 18px 48px}
+.hero{background:linear-gradient(135deg,#101a33,#243b78);color:white;border-radius:24px;padding:26px 26px 22px;box-shadow:0 18px 50px rgba(30,64,175,.18);margin-bottom:18px}
+.hero-top{display:flex;justify-content:space-between;gap:18px;align-items:flex-start}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;opacity:.75}
+h1{font-size:32px;line-height:1.15;margin:6px 0}
+.hero p{margin:7px 0 0;opacity:.82}
+.hero-actions{display:flex;align-items:center;gap:10px}
+.date-wrap{display:flex;flex-direction:column;gap:5px}
+.date-wrap label{font-size:12px;opacity:.8}
+.date-wrap input{border:0;border-radius:11px;padding:10px 11px;color:var(--text);background:white}
+.hero-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px}
+.hero-stat{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:12px 14px}
+.hero-stat .label{font-size:11px;opacity:.72}.hero-stat .value{font-size:20px;font-weight:800;margin-top:4px}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.card-pad{padding:18px}
+.top-grid{display:grid;grid-template-columns:1.75fr 1fr;gap:18px;align-items:start}
+.section-title{font-size:19px;margin:0}.section-sub{font-size:12px;color:var(--muted);margin-top:4px}
+.meal{padding:18px 0;border-bottom:1px solid var(--line)}.meal:last-child{border-bottom:0}
+.meal-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:11px}
+.meal-name{font-weight:800;font-size:17px}.meal-total{font-size:12px;color:var(--muted)}
+.row{display:grid;grid-template-columns:minmax(190px,1.65fr) .7fr .55fr .8fr .75fr .75fr .75fr auto;gap:8px;align-items:center;margin:9px 0}
+select,input[type="number"],input[type="date"],input[type="text"]{width:100%;border:1px solid #dfe4ec;background:#fff;color:var(--text);border-radius:10px;padding:10px 11px;outline:none}
+select:focus,input:focus{border-color:#8ab4ff;box-shadow:0 0 0 3px rgba(37,99,235,.09)}
+.unit-label{font-size:12px;color:var(--muted);padding-left:3px}
+.calc-cell{font-size:12px;color:#556070;white-space:nowrap}
+.remove{border:0;border-radius:10px;padding:10px 12px;background:#fff0f0;color:#b91c1c}
+.add-btn{margin-top:4px;border:0;background:#eef2ff;color:#1d4ed8;border-radius:10px;padding:10px 13px;font-weight:650}
+.footer-controls{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.primary{border:0;background:var(--primary);color:#fff;border-radius:11px;padding:11px 15px;font-weight:700}
+.secondary{border:1px solid var(--line);background:#fff;color:var(--text);border-radius:11px;padding:11px 15px}
+.status{margin-top:11px;padding:10px 12px;border-radius:11px;background:#f8fafc;color:#667085;font-size:12px}
+
+.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.metric{border:1px solid var(--line);border-radius:14px;padding:13px;background:linear-gradient(180deg,#fff,#fbfcfe)}
+.metric-head{display:flex;justify-content:space-between;gap:10px}.metric-title{font-size:12px;color:var(--muted)}.metric-value{font-size:22px;font-weight:800;margin-top:3px}
+.progress{height:8px;background:#edf1f7;border-radius:999px;overflow:hidden;margin-top:10px}.bar{height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--primary2));transition:width .2s ease}
+.target{font-size:11px;color:var(--muted);margin-top:6px}
+.right-card{margin-bottom:18px}.water-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.chip{border:1px solid var(--line);border-radius:999px;padding:8px 10px;background:#fff;color:#334155;font-size:12px}
+.checks{display:grid;gap:9px;margin-top:14px}.check{display:flex;gap:8px;align-items:center;font-size:13px}.check input{width:auto}
+.motivation{background:linear-gradient(135deg,#ecfdf5,#eff6ff);border:1px solid #dbeafe}.motivation .quote{font-size:15px;line-height:1.45;font-weight:750}.motivation .small{font-size:11px;color:var(--muted);margin-top:8px}
+.today-summary{margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.summary-box{background:var(--surface2);border-radius:12px;padding:12px}.summary-box .slabel{font-size:11px;color:var(--muted)}.summary-box .svalue{font-size:18px;font-weight:800;margin-top:3px}
+
+.analytics{margin-top:18px}
+.tabs{display:flex;gap:7px;padding:6px;background:#eef2f7;border-radius:14px;width:max-content;max-width:100%;overflow:auto}
+.tab{border:0;background:transparent;color:#637083;padding:10px 16px;border-radius:10px;font-weight:700;white-space:nowrap}.tab.active{background:#fff;color:var(--primary);box-shadow:0 3px 12px rgba(15,23,42,.07)}
+.period-head{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-top:14px;flex-wrap:wrap}.period-title{font-size:21px;font-weight:850}.period-sub{font-size:12px;color:var(--muted);margin-top:3px}
+.period-actions{display:flex;gap:7px}.icon-btn{border:1px solid var(--line);background:#fff;color:#334155;border-radius:10px;padding:8px 11px}
+.analytics-grid{display:grid;grid-template-columns:1.45fr .85fr;gap:16px;margin-top:16px}
+.chart-card{padding:18px}.chart-title{font-weight:800}.chart-sub{font-size:11px;color:var(--muted);margin-top:3px}
+.chart-wrap{height:290px;margin-top:12px;position:relative}.chart-wrap canvas{width:100%;height:100%;display:block}
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kpi{padding:13px;border:1px solid var(--line);border-radius:13px}.kpi .klabel{font-size:11px;color:var(--muted)}.kpi .kvalue{font-size:20px;font-weight:850;margin-top:4px}
+.table-wrap{overflow:auto;margin-top:14px}.history-table{width:100%;border-collapse:collapse;font-size:12px}.history-table th,.history-table td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}.history-table th{color:var(--muted)}
+.good{color:var(--green);font-weight:750}.warn{color:var(--amber);font-weight:750}.bad{color:var(--red);font-weight:750}
+.month-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.year-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.empty{padding:30px 10px;text-align:center;color:var(--muted);font-size:13px}
+
+@media(max-width:1050px){.top-grid,.analytics-grid{grid-template-columns:1fr}.hero-strip{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){.app{padding:16px 11px 36px}.hero-top{flex-direction:column}.hero-actions{width:100%}.date-wrap{width:100%}.stats{}.row{grid-template-columns:1fr 1fr 1fr}.row .food{grid-column:1/-1}.row .remove{grid-column:1/-1}.metrics{grid-template-columns:1fr 1fr}.today-summary{grid-template-columns:1fr}.month-grid,.year-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+  <section class="hero">
+    <div class="hero-top">
+      <div>
+        <div class="eyebrow">Your consistency dashboard</div>
+        <h1>My Fat Loss Journey 💪</h1>
+        <p>Small choices every day. Track it. Keep going. Get stronger.</p>
+      </div>
+      <div class="hero-actions">
+        <div class="date-wrap">
+          <label>Tracking date</label>
+          <input id="date" type="date">
+        </div>
+      </div>
+    </div>
+    <div class="hero-strip">
+      <div class="hero-stat"><div class="label">Weight</div><div class="value">73 kg</div></div>
+      <div class="hero-stat"><div class="label">Workout</div><div class="value">6:00 AM</div></div>
+      <div class="hero-stat"><div class="label">Calorie goal</div><div class="value">1.8–1.95k</div></div>
+      <div class="hero-stat"><div class="label">Protein goal</div><div class="value">120–135 g</div></div>
+    </div>
+  </section>
+
+  <div class="top-grid">
+    <section class="card card-pad">
+      <div>
+        <h2 class="section-title">Today's Food Intake</h2>
+        <div class="section-sub">Start empty. Choose what you actually ate and enter the exact quantity. Eggs are counted as 1 egg, 2 eggs, 3 eggs…; solids use g/kg and liquids use ml/L.</div>
+      </div>
+      <div id="mealSections"></div>
+      <div class="footer-controls">
+        <button class="primary" id="saveBtn">Save Day</button>
+        <button class="secondary" id="resetBtn">Reset This Day</button>
+      </div>
+      <div class="status" id="saveStatus">Your data is stored locally on this device and stays by date.</div>
+    </section>
+
+    <aside>
+      <section class="card card-pad right-card">
+        <h2 class="section-title">Today's Progress</h2>
+        <div class="section-sub">Your current totals update immediately when quantity changes.</div>
+        <div class="metrics" style="margin-top:14px">
+          <div class="metric"><div class="metric-head"><div class="metric-title">Calories</div><div id="dayCal">0 kcal</div></div><div class="progress"><div class="bar" id="calBar"></div></div><div class="target">Target 1,800–1,950 kcal</div></div>
+          <div class="metric"><div class="metric-head"><div class="metric-title">Protein</div><div id="dayProtein">0 g</div></div><div class="progress"><div class="bar" id="proteinBar"></div></div><div class="target">Target 120–135 g</div></div>
+          <div class="metric"><div class="metric-head"><div class="metric-title">Carbs</div><div id="dayCarbs">0 g</div></div><div class="progress"><div class="bar" id="carbsBar"></div></div><div class="target">Target 210–240 g</div></div>
+          <div class="metric"><div class="metric-head"><div class="metric-title">Fat</div><div id="dayFat">0 g</div></div><div class="progress"><div class="bar" id="fatBar"></div></div><div class="target">Target 45–60 g</div></div>
+        </div>
+
+        <div class="metric" style="margin-top:12px">
+          <div class="metric-head"><div class="metric-title">Water</div><div id="waterText">0 ml / 3,000 ml</div></div>
+          <div class="progress"><div class="bar" id="waterBar"></div></div>
+          <div class="water-actions">
+            <button class="chip" onclick="addWater(250)">+250 ml</button>
+            <button class="chip" onclick="addWater(500)">+500 ml</button>
+            <button class="chip" onclick="addWater(1000)">+1 L</button>
+            <button class="chip" onclick="addWater(-250)">−250 ml</button>
+          </div>
+        </div>
+
+        <div class="checks">
+          <label class="check"><input type="checkbox" id="workout"> Workout completed</label>
+          <label class="check"><input type="checkbox" id="sleep"> Good sleep / recovery</label>
+        </div>
+
+        <div class="today-summary">
+          <div class="summary-box"><div class="slabel">Daily cost</div><div class="svalue" id="dayCost">₹0</div></div>
+          <div class="summary-box"><div class="slabel">Meals logged</div><div class="svalue" id="mealsLogged">0/5</div></div>
+          <div class="summary-box"><div class="slabel">Day status</div><div class="svalue" id="dayStatus">Start</div></div>
+        </div>
+      </section>
+
+      <section class="card card-pad motivation">
+        <div class="section-title">Today's Reminder 🔥</div>
+        <div class="quote" id="motivation">You don't need a perfect day. You need another consistent day.</div>
+        <div class="small">Your progress comes from what you repeat, not what you do once.</div>
+      </section>
+    </aside>
+  </div>
+
+  <section class="card analytics">
+    <div class="card-pad">
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-tab="weekly">Weekly</button>
+        <button class="tab" data-tab="monthly">Monthly</button>
+        <button class="tab" data-tab="yearly">Yearly</button>
+      </div>
+
+      <div class="period-head">
+        <div>
+          <div class="period-title" id="periodTitle">Weekly Progress</div>
+          <div class="period-sub" id="periodSubtitle"></div>
+        </div>
+        <div class="period-actions">
+          <button class="icon-btn" id="prevPeriod">← Previous</button>
+          <button class="icon-btn" id="currentPeriod">Current</button>
+          <button class="icon-btn" id="nextPeriod">Next →</button>
+        </div>
+      </div>
+
+      <div id="analyticsContent"></div>
+    </div>
+  </section>
+</div>
+
+<script>
+const TARGETS={cal:1950,protein:135,carbs:240,fat:60,water:3000};
+const MEALS=[
+  {id:"pre",label:"Pre-workout"},
+  {id:"breakfast",label:"Breakfast"},
+  {id:"lunch",label:"Lunch"},
+  {id:"snack",label:"Snack / Evening"},
+  {id:"dinner",label:"Dinner"}
+];
+
+/* Nutrition reference values. Solid food is entered as g/kg; liquid as ml/L. */
+const FOODS={
+  "Banana":{type:"solid",unitOptions:["g","kg"],base:"g",cal:89,protein:1.09,carbs:22.84,fat:.33,cost:.0058},
+  "Egg":{type:"count",unitOptions:["egg","eggs"],base:"count",cal:72,protein:6.3,carbs:.4,fat:4.8,cost:8},
+  "Bread":{type:"solid",unitOptions:["g","kg"],base:"g",cal:265,protein:9,carbs:49,fat:3.2,cost:.03},
+  "Rice (cooked)":{type:"solid",unitOptions:["g","kg"],base:"g",cal:130,protein:2.7,carbs:28,fat:.3,cost:0},
+  "Soya chunks (dry)":{type:"solid",unitOptions:["g","kg"],base:"g",cal:345,protein:52,carbs:33,fat:.5,cost:.14},
+  "Chicken":{type:"solid",unitOptions:["g","kg"],base:"g",cal:165,protein:22,carbs:0,fat:7,cost:.26},
+  "Fish":{type:"solid",unitOptions:["g","kg"],base:"g",cal:110,protein:21,carbs:0,fat:2.5,cost:0},
+  "Curd":{type:"solid",unitOptions:["g","kg"],base:"g",cal:60,protein:3.5,carbs:4.5,fat:3,cost:.08},
+  "Carrot":{type:"solid",unitOptions:["g","kg"],base:"g",cal:41,protein:.9,carbs:9.6,fat:.24,cost:.10},
+  "Potato":{type:"solid",unitOptions:["g","kg"],base:"g",cal:77,protein:2,carbs:17,fat:.1,cost:.06},
+  "Roti / Wheat":{type:"solid",unitOptions:["g","kg"],base:"g",cal:340,protein:13,carbs:72,fat:2.5,cost:.07},
+  "Tomato":{type:"solid",unitOptions:["g","kg"],base:"g",cal:18,protein:.9,carbs:3.9,fat:.2,cost:0},
+  "Onion":{type:"solid",unitOptions:["g","kg"],base:"g",cal:40,protein:1.1,carbs:9.3,fat:.1,cost:0},
+  "Chilli":{type:"solid",unitOptions:["g","kg"],base:"g",cal:40,protein:1.9,carbs:8.8,fat:.4,cost:0},
+  "Home vegetables / curry":{type:"solid",unitOptions:["g","kg"],base:"g",cal:80,protein:2,carbs:10,fat:3,cost:0},
+  "Dal / lentils (cooked)":{type:"solid",unitOptions:["g","kg"],base:"g",cal:116,protein:9,carbs:20,fat:.4,cost:0},
+  "Milk":{type:"liquid",unitOptions:["ml","L"],base:"ml",cal:60,protein:3.2,carbs:4.8,fat:3.2,cost:.07},
+  "Coffee":{type:"liquid",unitOptions:["ml","L"],base:"ml",cal:25,protein:1,carbs:2.5,fat:1,cost:.007}
+};
+
+const EMPTY=()=>({rows:{pre:[],breakfast:[],lunch:[],snack:[],dinner:[]},water:0,workout:false,sleep:false,weight:null});
+const state=EMPTY();
+const dateEl=document.getElementById("date");
+let activeTab="weekly";
+let periodOffset=0;
+
+function todayISO(){
+  const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);
+}
+function dateKey(date){return "fatloss-tracker-v3-"+date}
+function round(n,p=1){const m=10**p;return Math.round(n*m)/m}
+function pct(v,max){return Math.max(0,Math.min(100,v/max*100))}
+function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+
+function buildMeals(){
+  const root=document.getElementById("mealSections");root.innerHTML="";
+  MEALS.forEach(m=>{
+    const s=document.createElement("div");s.className="meal";
+    s.innerHTML=`<div class="meal-head"><div class="meal-name">${m.label}</div><div class="meal-total" id="${m.id}Total">0 kcal • 0 g protein</div></div><div id="${m.id}Rows"></div><button class="add-btn" onclick="addRow('${m.id}')">+ Add food</button>`;
+    root.appendChild(s);
+  });
+}
+function addRow(meal){
+  state.rows[meal].push({food:"",qty:0,unit:"g"});
+  renderMeal(meal);recalc();persist();
+}
+function removeRow(meal,i){
+  state.rows[meal].splice(i,1);renderMeal(meal);recalc();persist();
+}
+function makeFoodSelect(row,meal,index){
+  const s=document.createElement("select");s.className="food";
+  s.innerHTML='<option value="">Select food item</option>'+Object.keys(FOODS).map(x=>`<option value="${escapeHtml(x)}">${escapeHtml(x)}</option>`).join("");
+  s.value=row.food||"";
+  s.onchange=()=>{row.food=s.value;row.qty=0;row.unit=row.food?FOODS[row.food].unitOptions[0]:"g";renderMeal(meal);recalc();persist()};
+  return s;
+}
+function makeUnitSelect(row,meal){
+  const s=document.createElement("select");
+  if(!row.food){s.innerHTML='<option value="g">Unit</option>'}
+  else if(FOODS[row.food].type==="count"){s.innerHTML='<option value="egg">Count</option>'; row.unit="egg";}
+  else s.innerHTML=FOODS[row.food].unitOptions.map(u=>`<option value="${u}">${u}</option>`).join("");
+  s.value=row.unit||"g";
+  s.onchange=()=>{row.unit=s.value;recalc();persist()};
+  return s;
+}
+function renderMeal(meal){
+  const box=document.getElementById(meal+"Rows");box.innerHTML="";
+  state.rows[meal].forEach((r,i)=>{
+    const row=document.createElement("div");row.className="row";
+    const food=makeFoodSelect(r,meal,i);
+    const qty=document.createElement("input");qty.type="number";qty.min="0";qty.step="any";qty.placeholder="Quantity";qty.value=r.qty||"";
+    qty.oninput=()=>{r.qty=Math.max(0,Number(qty.value)||0);updateAllRows();recalc();persist()};
+    const unit=makeUnitSelect(r,meal);
+    const cal=document.createElement("div"),p=document.createElement("div"),c=document.createElement("div"),f=document.createElement("div");
+    [cal,p,c,f].forEach(x=>x.className="calc-cell");
+    const rm=document.createElement("button");rm.className="remove";rm.textContent="Remove";rm.onclick=()=>removeRow(meal,i);
+    row.append(food,qty,unit,cal,p,c,f,rm);box.appendChild(row);
+    r.__els={cal,p,c,f};
+    updateRow(r);
+  });
+}
+function nutritionFactor(row){
+  if(!row.food || !row.qty) return 0;
+  const x=FOODS[row.food];
+  if(x.type==="count") return row.qty;
+  if(row.unit==="kg" || row.unit==="L") return row.qty*1000/100;
+  return row.qty/100;
+}
+function displayUnitLabel(row){
+  if(!row.food) return "—";
+  return FOODS[row.food].type==="count" ? (row.qty===1 ? "egg" : "eggs") : row.unit;
+}
+
+function updateRow(r){
+  const els=r.__els;if(!els)return;
+  if(!r.food||!r.qty){els.cal.textContent="0 kcal";els.p.textContent="0 g P";els.c.textContent="0 g C";els.f.textContent="0 g F";return}
+  const x=FOODS[r.food];
+  const factor=nutritionFactor(r);
+  els.cal.textContent=Math.round(x.cal*factor)+" kcal";
+  els.p.textContent=round(x.protein*factor)+" g P";
+  els.c.textContent=round(x.carbs*factor)+" g C";
+  els.f.textContent=round(x.fat*factor)+" g F";
+}
+function updateAllRows(){
+  MEALS.forEach(m=>state.rows[m.id].forEach(updateRow));
+}
+function calculateTotals(data=state){
+  const t={cal:0,protein:0,carbs:0,fat:0,cost:0};
+  const mt={};
+  MEALS.forEach(m=>mt[m.id]={cal:0,protein:0});
+  for(const m of MEALS) for(const r of (data.rows[m.id]||[])){
+    if(!r.food||!r.qty)continue;
+    const x=FOODS[r.food];
+    const factor=(r.unit==="kg"?r.qty*1000:r.unit==="L"?r.qty*1000:r.qty);
+    t.cal+=x.cal*factor/100;t.protein+=x.protein*factor/100;t.carbs+=x.carbs*factor/100;t.fat+=x.fat*factor/100;t.cost+=x.cost*factor;
+    mt[m.id].cal+=x.cal*factor/100;mt[m.id].protein+=x.protein*factor/100;
+  }
+  return {t,mt};
+}
+function renderAll(){MEALS.forEach(m=>renderMeal(m.id))}
+function recalc(){
+  updateAllRows();
+  const {t,mt}=calculateTotals();
+  document.getElementById("dayCal").textContent=Math.round(t.cal)+" kcal";
+  document.getElementById("dayProtein").textContent=Math.round(t.protein)+" g";
+  document.getElementById("dayCarbs").textContent=Math.round(t.carbs)+" g";
+  document.getElementById("dayFat").textContent=Math.round(t.fat)+" g";
+  document.getElementById("dayCost").textContent="₹"+Math.round(t.cost);
+  document.getElementById("calBar").style.width=pct(t.cal,TARGETS.cal)+"%";
+  document.getElementById("proteinBar").style.width=pct(t.protein,TARGETS.protein)+"%";
+  document.getElementById("carbsBar").style.width=pct(t.carbs,TARGETS.carbs)+"%";
+  document.getElementById("fatBar").style.width=pct(t.fat,TARGETS.fat)+"%";
+  MEALS.forEach(m=>document.getElementById(m.id+"Total").textContent=Math.round(mt[m.id].cal)+" kcal • "+Math.round(mt[m.id].protein)+" g protein");
+  document.getElementById("waterText").textContent=state.water+" ml / 3000 ml";
+  document.getElementById("waterBar").style.width=pct(state.water,3000)+"%";
+  document.getElementById("workout").checked=!!state.workout;
+  document.getElementById("sleep").checked=!!state.sleep;
+  document.getElementById("mealsLogged").textContent=MEALS.filter(m=>(state.rows[m.id]||[]).some(r=>r.food&&r.qty>0)).length+"/5";
+  document.getElementById("dayStatus").textContent=dayStatus(t);
+  updateWeeklyUI();
+}
+function dayStatus(t){
+  if(t.cal===0&&t.protein===0)return"Start";
+  if(t.cal>=1800&&t.cal<=1950&&t.protein>=120&&t.protein<=160)return"On track";
+  if(t.cal>1950||t.fat>60)return"Adjust";
+  return"Building";
+}
+function addWater(v){state.water=Math.max(0,Math.min(10000,state.water+v));recalc();persist()}
+function persist(){
+  const clean=JSON.parse(JSON.stringify(state,(k,v)=>k==="__els"?undefined:v));
+  localStorage.setItem(dateKey(dateEl.value),JSON.stringify(clean));
+  document.getElementById("saveStatus").textContent="Auto-saved • "+dateEl.value+" • Your history stays on this device";
+}
+function loadDay(){
+  const raw=localStorage.getItem(dateKey(dateEl.value));
+  const saved=raw?JSON.parse(raw):EMPTY();
+  Object.assign(state,EMPTY(),saved);
+  renderAll();recalc();
+}
+function saveDay(){persist();document.getElementById("saveStatus").textContent="Saved successfully • "+dateEl.value}
+function resetDay(){
+  if(!confirm("Reset only this date? Other dates will remain saved."))return;
+  localStorage.removeItem(dateKey(dateEl.value));Object.assign(state,EMPTY());renderAll();recalc();
+  document.getElementById("saveStatus").textContent="This day was reset. Other days are still safe.";
+}
+
+function parseISO(s){return new Date(s+"T00:00:00")}
+function iso(d){
+  const x=new Date(d);return new Date(x.getTime()-x.getTimezoneOffset()*60000).toISOString().slice(0,10)
+}
+function addDays(s,n){const d=parseISO(s);d.setDate(d.getDate()+n);return iso(d)}
+function startOfWeek(s){const d=parseISO(s);const dow=d.getDay();d.setDate(d.getDate()-(dow===0?0:dow));return iso(d)}
+function endOfWeek(s){return addDays(startOfWeek(s),6)}
+function startOfMonth(s){const d=parseISO(s);d.setDate(1);return iso(d)}
+function endOfMonth(s){const d=parseISO(s);d.setMonth(d.getMonth()+1);d.setDate(0);return iso(d)}
+function startOfYear(s){return s.slice(0,4)+"-01-01"}
+function endOfYear(s){return s.slice(0,4)+"-12-31"}
+function datesBetween(a,b){let out=[];for(let d=a;d<=b;d=addDays(d,1))out.push(d);return out}
+function savedSummary(date){
+  const raw=localStorage.getItem(dateKey(date));if(!raw)return {logged:false,cal:0,protein:0,carbs:0,fat:0,cost:0,water:0,workout:false,weight:null};
+  const d=JSON.parse(raw), {t}=calculateTotals(d);
+  return {...t,water:d.water||0,workout:!!d.workout,weight:d.weight??null,logged:true};
+}
+function rangeInfo(){
+  const base=dateEl.value, shift=periodOffset;
+  if(activeTab==="weekly"){
+    let start=startOfWeek(base);start=addDays(start,shift*7);return {start,end:addDays(start,6),label:"Week"};
+  }
+  if(activeTab==="monthly"){
+    let start=startOfMonth(base),d=parseISO(start);d.setMonth(d.getMonth()+shift);start=iso(d);return {start,end:endOfMonth(start),label:"Month"};
+  }
+  let start=startOfYear(base);let y=Number(start.slice(0,4))+shift;start=y+"-01-01";return {start,end:y+"-12-31",label:"Year"};
+}
+function aggregate(start,end){
+  const ds=datesBetween(start,end), vals=ds.map(savedSummary).filter(x=>x.logged);
+  const sum=vals.reduce((a,v)=>{a.cal+=v.cal;a.protein+=v.protein;a.carbs+=v.carbs;a.fat+=v.fat;a.cost+=v.cost;a.water+=v.water;a.workout+=v.workout?1:0;return a},{cal:0,protein:0,carbs:0,fat:0,cost:0,water:0,workout:0});
+  const avg=x=>vals.length?x/vals.length:0;
+  return {days:ds,logged:vals.length,sum,avg:{cal:avg(sum.cal),protein:avg(sum.protein),carbs:avg(sum.carbs),fat:avg(sum.fat),water:avg(sum.water)},vals};
+}
+function prettyDate(d,opt={month:"short",day:"2-digit"}){return parseISO(d).toLocaleDateString(undefined,opt)}
+function periodTitle(){
+  const r=rangeInfo();
+  if(activeTab==="weekly") return `Weekly Progress • ${prettyDate(r.start)} – ${prettyDate(r.end)}`;
+  if(activeTab==="monthly") return `Monthly Progress • ${parseISO(r.start).toLocaleDateString(undefined,{month:"long",year:"numeric"})}`;
+  return `Yearly Progress • ${r.start.slice(0,4)}`;
+}
+function drawChart(canvas,dates,metric,color="#2563eb",maxY=null){
+  const ctx=canvas.getContext("2d"), w=canvas.clientWidth*2,h=canvas.clientHeight*2;
+  canvas.width=w;canvas.height=h;ctx.clearRect(0,0,w,h);ctx.scale(2,2);
+  const W=canvas.clientWidth,H=canvas.clientHeight,pad={l:36,r:12,t:15,b:35};
+  const chartW=W-pad.l-pad.r,chartH=H-pad.t-pad.b;
+  const vals=dates.map(d=>metric(savedSummary(d)));
+  const max=Math.max(maxY||0,...vals,1)*1.12;
+  ctx.strokeStyle="#e9edf3";ctx.lineWidth=1;
+  for(let i=0;i<4;i++){const y=pad.t+chartH*(i/3);ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(W-pad.r,y);ctx.stroke()}
+  const min=0;
+  function px(i){return pad.l+(dates.length===1?chartW/2:i/(dates.length-1)*chartW)}
+  function py(v){return pad.t+chartH-(v-min)/(max-min)*chartH}
+  ctx.beginPath();
+  vals.forEach((v,i)=>{const x=px(i),y=py(v);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)});
+  ctx.strokeStyle=color;ctx.lineWidth=2.5;ctx.stroke();
+  vals.forEach((v,i)=>{if(!v)return;const x=px(i),y=py(v);ctx.beginPath();ctx.arc(x,y,3.5,0,Math.PI*2);ctx.fillStyle=color;ctx.fill()});
+  ctx.fillStyle="#7a8492";ctx.font="11px system-ui";ctx.textAlign="center";
+  const step=Math.max(1,Math.ceil(dates.length/7));
+  dates.forEach((d,i)=>{if(i%step===0||i===dates.length-1)ctx.fillText(activeTab==="weekly"?prettyDate(d,{month:"2-digit",day:"2-digit"}):prettyDate(d,{month:"short",day:"numeric"}),px(i),H-12)});
+}
+function renderAnalytics(){
+  const r=rangeInfo(),agg=aggregate(r.start,r.end);
+  document.getElementById("periodTitle").textContent=periodTitle();
+  document.getElementById("periodSubtitle").textContent=`Time period: ${r.start} to ${r.end} • ${agg.logged} logged day${agg.logged===1?"":"s"}`;
+  const content=document.getElementById("analyticsContent");
+  const commonKpis=`
+    <div class="kpi-grid">
+      <div class="kpi"><div class="klabel">Logged days</div><div class="kvalue">${agg.logged}/${agg.days.length}</div></div>
+      <div class="kpi"><div class="klabel">Workout days</div><div class="kvalue">${agg.sum.workout}</div></div>
+      <div class="kpi"><div class="klabel">Average calories</div><div class="kvalue">${Math.round(agg.avg.cal)} kcal</div></div>
+      <div class="kpi"><div class="klabel">Average protein</div><div class="kvalue">${Math.round(agg.avg.protein)} g</div></div>
+      <div class="kpi"><div class="klabel">Total cost</div><div class="kvalue">₹${Math.round(agg.sum.cost)}</div></div>
+      <div class="kpi"><div class="klabel">Average water</div><div class="kvalue">${Math.round(agg.avg.water)} ml</div></div>
+    </div>`;
+
+  let chartDates=r.start===r.end?[r.start]:agg.days;
+  if(activeTab==="yearly"){
+    // Yearly graph uses one data point per month.
+    chartDates=[];for(let m=0;m<12;m++){const d=new Date(Number(r.start.slice(0,4)),m,1);chartDates.push(iso(d))}
+  }
+  const chartMetric=(date)=>{
+    if(activeTab!=="yearly")return savedSummary(date).cal;
+    const monthStart=startOfMonth(date),monthEnd=endOfMonth(date);
+    return aggregate(monthStart,monthEnd).avg.cal;
+  };
+  const chartDatesData=activeTab==="yearly"?chartDates.map(d=>({d})):chartDates.map(d=>({d}));
+  const chartValues=chartDatesData.map(o=>o.d);
+
+  content.innerHTML=`
+    <div class="analytics-grid">
+      <div class="card chart-card">
+        <div class="chart-title">Calories trend</div>
+        <div class="chart-sub">${activeTab==="weekly"?"Daily calories":"Average daily calories by period"}</div>
+        <div class="chart-wrap"><canvas id="calChart"></canvas></div>
+      </div>
+      <div class="card chart-card">
+        <div class="chart-title">${activeTab==="weekly"?"Daily targets":"Period summary"}</div>
+        <div class="chart-sub">Use trends, not one perfect day, to judge progress.</div>
+        ${commonKpis}
+      </div>
+    </div>
+    <div class="card chart-card" style="margin-top:16px">
+      <div class="chart-title">Protein trend</div>
+      <div class="chart-sub">Your muscle-preservation target is about 120–135 g/day.</div>
+      <div class="chart-wrap"><canvas id="proteinChart"></canvas></div>
+    </div>
+    <div class="card chart-card" style="margin-top:16px">
+      <div class="chart-title">Daily history</div>
+      <div class="chart-sub">Your selected period, with each day kept separately.</div>
+      <div class="table-wrap">
+        <table class="history-table">
+          <thead><tr><th>Date</th><th>Calories</th><th>Protein</th><th>Carbs</th><th>Fat</th><th>Water</th><th>Workout</th><th>Status</th></tr></thead>
+          <tbody>${historyRows(agg.days)}</tbody>
+        </table>
+      </div>
+    </div>`;
+
+  setTimeout(()=>{
+    const calCanvas=document.getElementById("calChart"),proteinCanvas=document.getElementById("proteinChart");
+    if(activeTab==="yearly"){
+      drawChart(calCanvas,chartValues,d=>chartMetric(d),"#2563eb",2500);
+      drawChart(proteinCanvas,chartValues,d=>aggregate(startOfMonth(d),endOfMonth(d)).avg.protein,"#7c3aed",160);
+    }else{
+      drawChart(calCanvas,chartValues,d=>savedSummary(d).cal,"#2563eb",2500);
+      drawChart(proteinCanvas,chartValues,d=>savedSummary(d).protein,"#7c3aed",160);
+    }
+  },0);
+}
+function historyRows(dates){
+  let html="";
+  dates.forEach(d=>{
+    const s=savedSummary(d),cls=d===dateEl.value?' style="background:#f8faff;font-weight:700"':"";
+    const status=!s.logged?"Not logged":statusForSummary(s);
+    const sc=status==="On target"?"good":status==="Over target"?"bad":"warn";
+    html+=`<tr${cls}><td>${prettyDate(d,{weekday:"short",month:"2-digit",day:"2-digit"})}</td><td>${s.logged?Math.round(s.cal):"—"}</td><td>${s.logged?Math.round(s.protein)+" g":"—"}</td><td>${s.logged?Math.round(s.carbs)+" g":"—"}</td><td>${s.logged?Math.round(s.fat)+" g":"—"}</td><td>${s.logged?Math.round(s.water)+" ml":"—"}</td><td>${s.logged?(s.workout?"✓":"—"):"—"}</td><td><span class="${sc}">${status}</span></td></tr>`;
+  });
+  return html;
+}
+function statusForSummary(s){
+  if(s.cal===0&&s.protein===0)return"Start";
+  if(s.cal>=1800&&s.cal<=1950&&s.protein>=120&&s.protein<=160)return"On target";
+  if(s.cal>1950||s.fat>60)return"Over target";
+  return"Needs adjustment";
+}
+function statusFor(s){return statusForSummary(s)}
+function updateWeeklyUI(){renderAnalytics()}
+
+document.querySelectorAll(".tab").forEach(btn=>btn.addEventListener("click",()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));btn.classList.add("active");
+  activeTab=btn.dataset.tab;periodOffset=0;renderAnalytics()
+}));
+document.getElementById("prevPeriod").addEventListener("click",()=>{periodOffset--;renderAnalytics()});
+document.getElementById("nextPeriod").addEventListener("click",()=>{periodOffset++;renderAnalytics()});
+document.getElementById("currentPeriod").addEventListener("click",()=>{periodOffset=0;renderAnalytics()});
+document.getElementById("saveBtn").addEventListener("click",saveDay);
+document.getElementById("resetBtn").addEventListener("click",resetDay);
+dateEl.addEventListener("change",()=>{periodOffset=0;loadDay()});
+document.getElementById("workout").addEventListener("change",()=>{state.workout=document.getElementById("workout").checked;persist()});
+document.getElementById("sleep").addEventListener("change",()=>{state.sleep=document.getElementById("sleep").checked;persist()});
+
+dateEl.value=todayISO();
+buildMeals();
+loadDay();
+</script>
+</body>
+</html>
