@@ -9,7 +9,15 @@ if(configured&&window.supabase?.createClient){
 const localKey=(kind,date)=>`fitness-local-${kind}-${date}`;
 async function session(){if(!client)return null;const {data}=await client.auth.getSession();return data.session||null}
 async function signIn(email,password){const {data,error}=await client.auth.signInWithPassword({email,password});if(error)throw error;return data}
-async function signUp(email,password){const {data,error}=await client.auth.signUp({email,password});if(error)throw error;return data}
+async function signUp(email,password){
+  const redirectTo = window.location.origin + window.location.pathname;
+  const {data,error}=await client.auth.signUp({
+    email,password,
+    options:{emailRedirectTo:redirectTo}
+  });
+  if(error)throw error;
+  return data;
+}
 async function signOut(){if(!client)return;const {error}=await client.auth.signOut();if(error)throw error}
 async function saveLog(kind,date,payload){
   const clean=JSON.parse(JSON.stringify(payload));localStorage.setItem(localKey(kind,date),JSON.stringify(clean));
