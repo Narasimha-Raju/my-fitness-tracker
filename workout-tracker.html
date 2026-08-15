@@ -177,6 +177,80 @@ select:focus,input:focus,textarea:focus{border-color:#8ab4ff;box-shadow:0 0 0 3p
 }
 
 </style>
+
+<style id="mobile-layout-fixes">
+/* Mobile layout fixes: preserve existing UI and functionality, prevent clipping/overflow. */
+html, body { width:100%; max-width:100%; overflow-x:hidden; }
+*, *::before, *::after { max-width:100%; }
+img, canvas, svg, video { max-width:100%; }
+button, input, select, textarea { max-width:100%; min-width:0; }
+
+@media (max-width: 720px){
+  body { min-width:0; }
+  .app { width:100%; max-width:100%; padding-left:10px !important; padding-right:10px !important; overflow-x:clip; }
+  .hero, .card, .section, .site-nav, .nav { max-width:100%; }
+
+  /* Header/navigation */
+  .site-nav, .nav { flex-wrap:wrap !important; gap:8px !important; }
+  .site-nav .site-brand, .brand { min-width:0; max-width:100%; }
+  .site-nav .site-brand span:last-child, .brand { overflow:hidden; text-overflow:ellipsis; }
+  .site-nav .site-links, .links { width:100% !important; min-width:0; overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+  .site-nav .site-links::-webkit-scrollbar, .links::-webkit-scrollbar { display:none; }
+  .site-nav .site-links a, .links a { flex:1 0 auto; min-width:74px !important; }
+  .date-wrap, .date-control, .date-box { width:100% !important; min-width:0; }
+  .date-wrap input, .date-control input, .date-box input { width:100% !important; min-width:0; }
+
+  /* Main grids/cards */
+  .top-grid, .layout, .today-grid, .history-grid, .chart-grid, .analytics-grid, .month-grid, .year-grid,
+  .journey-overview, .progress-dashboard { grid-template-columns:minmax(0,1fr) !important; }
+  .grid-2, .form-two, .cardio-grid { grid-template-columns:minmax(0,1fr) !important; }
+  .hero-top, .hero-actions, .section-head, .section-heading, .panel-head, .week-progress-top,
+  .period-head, .period-nav { min-width:0; }
+  .hero p, .section-sub, .subtitle, .period-sub { overflow-wrap:anywhere; }
+
+  /* Prevent wide controls from forcing the viewport */
+  .row, .exercise-row, .recipe-ingredient { min-width:0 !important; width:100%; }
+  .row > *, .exercise-row > *, .recipe-ingredient > * { min-width:0 !important; max-width:100%; }
+  .meal .row { width:100%; }
+  .meal .row input, .meal .row select { min-width:0 !important; }
+
+  /* Buttons/actions */
+  .actions, .footer-controls, .action-bar, .action-group, .cardio-actions, .period-actions { min-width:0; max-width:100%; }
+  .actions button, .footer-controls button, .action-group button, .action-bar button { max-width:100%; }
+
+  /* Tables/charts stay inside their cards */
+  .table-wrap, .history-table, .table, .lib-list, .week-strip { max-width:100%; }
+  .table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .chart-wrap, .chart { width:100% !important; max-width:100%; overflow:hidden; }
+  canvas { max-width:100% !important; }
+
+  /* Modals/drawers */
+  .custom-modal, .food-library-modal { padding:8px !important; }
+  .custom-modal-card, .food-library-card { width:min(100%,680px) !important; max-width:100% !important; margin:0; }
+  .lib-head-row, .lib-tools { min-width:0; max-width:100%; }
+
+  /* Week cards can scroll internally instead of clipping the page */
+  .week-days, .week-strip { max-width:100%; }
+}
+
+@media (max-width: 480px){
+  .app { padding-left:8px !important; padding-right:8px !important; }
+  .hero { border-radius:18px !important; }
+  .hero h1 { font-size:28px !important; }
+  .hero-inner { padding-left:16px !important; padding-right:16px !important; }
+  .hero-actions .btn, .hero-actions a, .hero-actions button { width:100%; }
+  .hero-stats, .hero-strip, .mini-stats, .metrics, .kpis, .chart-kpis, .week-footer { grid-template-columns:minmax(0,1fr) !important; }
+  .goal-row { grid-template-columns:70px minmax(0,1fr) !important; }
+  .goal-status { grid-column:2; text-align:left !important; }
+  .section-title, .week-progress-title, .period-title { overflow-wrap:anywhere; }
+  .section-heading .heading-copy { min-width:0; }
+  .section-action { width:100%; }
+  .section-action button, .section-action .btn { width:100%; }
+  .period-actions { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+  .period-actions button { min-width:0; padding-left:6px; padding-right:6px; }
+  .library-card, .plan-card { width:100%; }
+}
+</style>
 </head>
 <body>
 <div class="app">
