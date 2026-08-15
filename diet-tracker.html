@@ -2537,6 +2537,8 @@ loadDay();
     if(backendReady){
       const status=document.getElementById("libraryBackendStatus");if(status)status.textContent="☁ Backend library connected";
       await FoodLibraryBackend.load();
+      if(typeof loadDay==="function") loadDay();
+      else if(typeof repairLoadDay==="function") repairLoadDay();
     }else{
       const status=document.getElementById("libraryBackendStatus");if(status)status.textContent="Local preview • configure Supabase for account sync";
     }
@@ -2589,13 +2591,45 @@ loadDay();
       });
     }
 
-    // Home is intentionally anchored to today's date whenever it opens.
+    // The Home page always opens on today. The Diet Tracker also opens on
+    // today's date so the top shared date is never blank/stale.
     const file=location.pathname.split('/').pop()||'index.html';
+    const today=todayISO();
+
     if(file==='index.html' || file===''){
-      const today=todayISO();
       if(date.value!==today) date.value=today;
     }
+
+    if(file==='diet-tracker.html'){
+      if(date.value!==today){
+        date.value=today;
+      }
+
+      // The page's main initialization may have happened before the shared
+      // header moved the date input. Reload the actual selected day here.
+      setTimeout(()=>{
+        try{
+          if(typeof loadDay==='function') loadDay();
+          else if(typeof repairLoadDay==='function') repairLoadDay();
+        }catch(e){
+          console.warn('Unable to reload today\'s diet data:',e);
+        }
+      },0);
+    }
   }
+
+  // When cross-device sync restores the cloud copy into localStorage,
+  // explicitly reload the current day's food rows and totals.
+  window.addEventListener('fitness-cloud-restored',()=>{
+    const file=location.pathname.split('/').pop()||'index.html';
+    if(file!=='diet-tracker.html') return;
+    try{
+      if(typeof loadDay==='function') loadDay();
+      else if(typeof repairLoadDay==='function') repairLoadDay();
+    }catch(e){
+      console.warn('Unable to refresh diet data after cloud sync:',e);
+    }
+  });
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initSharedHeader);
   else initSharedHeader();
