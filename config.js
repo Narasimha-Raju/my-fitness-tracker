@@ -1,4 +1,4 @@
 window.SUPABASE_CONFIG = {
-  url: "https://YOUR_PROJECT.supabase.co",
-  anonKey: "YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY"
+  url: "https://my_fitness_tracker.supabase.co",
+  anonKey: "sb_publishable_3LOw2G_VyRCDa-XvdKUdNQ_KGdk3F0U"
 };
